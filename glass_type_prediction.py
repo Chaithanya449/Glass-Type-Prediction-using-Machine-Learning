@@ -86,7 +86,18 @@ print('classification_report:',classification_report(y_test,y_pred))
 
 # Applying Bagging and boosting techniques to observe Accuracy
 """
+# Feature importance
+feat_importances = pd.Series(rf_model.feature_importances_, index=features.columns)
 
+# Plot top 10 features
+plt.figure(figsize=(10,6))
+feat_importances.nlargest(10).plot(kind='barh', color='skyblue')
+plt.title('Feature Importance in Glass Type Prediction')
+plt.xlabel('Importance Score')
+plt.gca().invert_yaxis()  # Highest on top
+plt.tight_layout()
+plt.savefig('feature_importance.png', dpi=300)
+plt.show()
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 bagging_model = BaggingClassifier(estimator = DecisionTreeClassifier(),n_estimators = 100,random_state =42)
